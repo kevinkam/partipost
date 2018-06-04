@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { List } from "antd"
+import { List, Button } from "antd"
 
 const Item = List.Item
 
@@ -9,7 +9,8 @@ export const ListWrapper = styled(List)`
 `
 
 export const ItemWrapper = styled(Item)`
-  background: #fff;
+  background: ${({ selected }: { selected: boolean }) =>
+    selected ? "#5eb2ed" : "#fff"};
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
@@ -26,5 +27,14 @@ export const ItemWrapper = styled(Item)`
   .info {
     font-weight: 700;
     line-height: 50px;
+    color: ${({ selected }: { selected: boolean }) =>
+      selected ? "#fff" : "#000"};
+  }
+  .ant-btn {
+    font-weight: 500;
+    background: ${({ selected }: { selected: boolean }) =>
+      selected ? "#fff" : "#5eb2ed"};
+    color: ${({ selected }: { selected: boolean }) =>
+      selected ? "#000" : "#fff"};
   }
 `

@@ -2,7 +2,9 @@ import * as React from "react"
 import { Icon, Spin, Button } from "antd"
 import { ListWrapper, ItemWrapper } from "./Styled"
 
-interface IState {
+interface ExposeProps {
+  toggleCart: (item) => void
+  carts: Array<number>
   loading: boolean
   partiposters: Array<{
     id: number
@@ -14,48 +16,36 @@ interface IState {
 }
 const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />
 
-class List extends React.PureComponent<{}, IState> {
-  readonly state = {
-    loading: true,
-    partiposters: []
-  }
-  getData = () => {
-    setTimeout(async () => {
-      const {
-        default: { partiposters }
-      } = await import("data/db.json")
-      this.setState({
-        loading: false,
-        partiposters
-      })
-    }, 1000)
-  }
-  componentDidMount() {
-    this.getData()
-  }
-  render() {
-    const { loading, partiposters } = this.state
-    return (
-      <ListWrapper>
-        {loading ? (
-          <ItemWrapper>
-            <div style={{ textAlign: "center", width: "100%" }}>
-              <Spin indicator={antIcon} />
-            </div>
+const List = ({ toggleCart, carts, loading, partiposters }: ExposeProps) => (
+  <ListWrapper>
+    {loading ? (
+      <ItemWrapper>
+        <div style={{ textAlign: "center", width: "100%" }}>
+          <Spin indicator={antIcon} />
+        </div>
+      </ItemWrapper>
+    ) : (
+      partiposters.map((p, i) => {
+        const selected = carts.includes(p.id)
+        return (
+          <ItemWrapper
+            key={i}
+            actions={[
+              <Button onClick={toggleCart.bind(null, p.id)}>
+                {selected ? "DESELECT" : "SELECT"}
+              </Button>
+            ]}
+            selected={selected}
+          >
+            <img src={p.image_url} />
+            <span className="info">
+              {p.name} · ${p.fee}
+            </span>
           </ItemWrapper>
-        ) : (
-          partiposters.map((p, i) => (
-            <ItemWrapper key={i} actions={[<Button>Select</Button>]}>
-              <img src={p.image_url} />
-              <span className="info">
-                {p.name} · ${p.fee}
-              </span>
-            </ItemWrapper>
-          ))
-        )}
-      </ListWrapper>
-    )
-  }
-}
+        )
+      })
+    )}
+  </ListWrapper>
+)
 
-export default List
+export default List as React.SFC<ExposeProps>
