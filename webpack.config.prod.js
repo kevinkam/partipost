@@ -77,16 +77,4 @@ module.exports = {
       template: "./src/index.html"
     })
   ]
-  // plugins: [
-  //   new webpack.WatchIgnorePlugin([/\.js$/, /\.d\.ts$/]),
-  //   new webpack.optimize.CommonsChunkPlugin({
-  //     name: "vendor",
-  //     filename: "vendor.js",
-  //     minChunks: function(module) {
-  //       // this assumes your vendor imports exist in the node_modules directory
-  //       return module.context && module.context.includes("node_modules")
-  //     },
-  //     chunks: ["bundle"]
-  //   })
-  // ]
 }
