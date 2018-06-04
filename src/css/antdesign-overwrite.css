@@ -1,0 +1,11 @@
+html, body, #root {
+    height: 100%;
+    background: #253778;
+}
+.ant-card-bordered {
+    border: 0;
+}
+.ant-card-body {
+    background: #253778;
+    padding: 0;
+}
